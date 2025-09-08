@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HABLON — Indigenous Mindanao Textile Geometry & Vector Loom Archive</title>
+  <meta name="description" content="An interactive generative geometry and cultural archive exploring indigenous Mindanao weaving traditions (T'nalak, Yakan, and Inaul) through vector algorithms.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Gallery Header -->
+  <header class="gallery-masthead">
+    <div class="masthead-container">
+      <div class="brand-block">
+        <span class="brand-num">FOLIO NO. 04</span>
+        <h1 class="brand-title">HABLON</h1>
+        <span class="brand-subtitle">INDIGENOUS MINDANAO TEXTILE GEOMETRY & ARCHIVE</span>
+      </div>
+      <div class="masthead-meta">
+        <span>COLLECTION: REGION IX &bull; X &bull; XII &bull; BARMM</span>
+        <span>OPEN ACCESS DIGITAL CATALOGUE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Museum Grid -->
+  <main class="gallery-main">
+    
+    <!-- Left: Textile Archetype Selection & Curatorial Dossier -->
+    <aside class="curatorial-sidebar">
+      
+      <div class="sidebar-header">
+        <span class="meta-label">TRADITION SELECTOR</span>
+        <div class="tradition-selector">
+          <button class="tradition-btn active" onclick="selectTradition('tnalak', this)">
+            <span class="btn-index">01</span>
+            <span class="btn-name">T'nalak &bull; T'boli</span>
+          </button>
+          <button class="tradition-btn" onclick="selectTradition('yakan', this)">
+            <span class="btn-index">02</span>
+            <span class="btn-name">Seputangan &bull; Yakan</span>
+          </button>
+          <button class="tradition-btn" onclick="selectTradition('inaul', this)">
+            <span class="btn-index">03</span>
+            <span class="btn-name">Inaul &bull; Maguindanao</span>
+          </button>
+          <button class="tradition-btn" onclick="selectTradition('maranao', this)">
+            <span class="btn-index">04</span>
+            <span class="btn-name">Okir / Landap &bull; Maranao</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Curatorial Provenance Block -->
+      <div class="provenance-block">
+        <span class="meta-label">CULTURAL PROVENANCE</span>
+        <h2 id="traditionTitle">T'nalak Sacred Abaca Tapestry</h2>
+        <p class="origin-sub" id="traditionOrigin">Lake Sebu, South Cotabato &bull; T'boli Dreamweavers</p>
+        
+        <p class="tradition-summary" id="traditionSummary">
+          Woven from fine abaca fibers conditioned with beeswax and dyed using natural boiled roots and bark. Traditionally known as "woven dreams" bestowed by Fu Dalu, the spirit of abaca. The motifs embody non-repeating symmetry and rhythmic geometric permutations.
+        </p>
+
+        <div class="material-matrix">
+          <div class="matrix-row">
+            <span class="m-key">Base Fiber</span>
+            <span class="m-val" id="traditionFiber">Musa textilis (Wild Abaca)</span>
+          </div>
+          <div class="matrix-row">
+            <span class="m-key">Organic Pigments</span>
+            <span class="m-val" id="traditionPigments">Locust tree bark (Black), Ginger root (Red)</span>
+          </div>
+          <div class="matrix-row">
+            <span class="m-key">Loom Type</span>
+            <span class="m-val" id="traditionLoom">Backstrap Tension Loom</span>
+          </div>
+          <div class="matrix-row">
+            <span class="m-key">Mathematical Symmetry</span>
+            <span class="m-val" id="traditionSymmetry">D4 Dihedral Diamond Group</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Export Action -->
+      <div class="export-tray">
+        <button class="action-btn" onclick="exportVectorSVG()">Export Vector Pattern (.SVG)</button>
+        <button class="action-btn secondary" onclick="randomizeLoomSeed()">Randomize Thread Seed</button>
+      </div>
+
+    </aside>
+
+    <!-- Right: Generative Loom Canvas Stage -->
+    <section class="loom-stage">
+      
+      <!-- Loom Controls Bar -->
+      <div class="loom-controls">
+        <div class="control-cell">
+          <label for="warpDensity">WARP / WEFT DENSITY</label>
+          <input type="range" id="warpDensity" min="6" max="24" value="12" step="2" oninput="regeneratePattern()">
+          <span class="val-tag" id="densityVal">12 x 12</span>
+        </div>
+        <div class="control-cell">
+          <label for="threadPalette">ORGANIC DYE PALETTE</label>
+          <div class="palette-swatches" id="paletteSwatches">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+        <div class="control-cell">
+          <label>THREAD FIDELITY</label>
+          <span class="fidelity-tag" id="patternTag">MATHEMATICALLY ACCURATE ALGORITHM</span>
+        </div>
+      </div>
+
+      <!-- The Generative SVG Canvas Frame -->
+      <div class="canvas-frame">
+        <div class="canvas-mat">
+          <svg id="loomSvg" viewBox="0 0 640 640" class="loom-svg" xmlns="http://www.w3.org/2000/svg">
+            <rect width="640" height="640" fill="#141414" id="loomBg"/>
+            <g id="loomPatternGroup"></g>
+          </svg>
+        </div>
+        
+        <div class="mat-caption">
+          <span class="caption-id" id="patternSpecId">FIG. 04-A &bull; T'NALAK DIAMOND LATTICE MATRIX</span>
+          <span class="caption-scale">SCALE 1:1 &bull; 640 x 640 VECTOR UNITS</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
