@@ -2,172 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HABLON - Indigenous Mindanao Textile Geometry & Vector Loom Archive</title>
-  <meta name="description" content="An interactive generative geometry and cultural archive exploring indigenous Mindanao weaving traditions (T'nalak, Yakan, Inaul, and Maranao) through vector algorithms.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hablon: a loom for four Mindanao cloths</title>
+  <meta name="description" content="An interactive browser study. Work a simulated loom, weave four cloths inspired by Mindanao weaving traditions, and download what you weave as an SVG.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#1b1a19">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231b1a19'/%3E%3Cpath fill='%23d9a21e' d='M2 2h4v4H2zM10 2h4v4h-4zM6 6h4v4H6zM2 10h4v4H2zM10 10h4v4h-4z'/%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+  <a class="skip" href="#main">Skip to the text</a>
 
-  <!-- Gallery Header -->
-  <header class="gallery-masthead">
-    <div class="masthead-container">
-      <div class="brand-block">
-        <span class="brand-num">FOLIO NO. 04</span>
-        <h1 class="brand-title">HABLON</h1>
-        <span class="brand-subtitle">INDIGENOUS MINDANAO TEXTILE GEOMETRY ARCHIVE</span>
-      </div>
-      <div class="masthead-meta">
-        <span>COLLECTION: REGION IX // X // XII // BARMM</span>
-        <span>OPEN ACCESS DIGITAL CATALOGUE</span>
-      </div>
-    </div>
-  </header>
+  <noscript><p class="nojs">Hablon is an interactive study and needs JavaScript to run the loom.</p></noscript>
 
-  <!-- Main Museum Grid -->
-  <main class="gallery-main">
-    
-    <!-- Left: Textile Archetype Selection & Curatorial Dossier -->
-    <aside class="curatorial-sidebar">
-      
-      <div class="sidebar-header">
-        <span class="meta-label">TRADITION SELECTOR</span>
-        <div class="tradition-selector">
-          <button class="tradition-btn active" onclick="selectTradition('tnalak', this)">
-            <span class="btn-index">01</span>
-            <span class="btn-name">T'nalak // T'boli</span>
-          </button>
-          <button class="tradition-btn" onclick="selectTradition('yakan', this)">
-            <span class="btn-index">02</span>
-            <span class="btn-name">Seputangan // Yakan</span>
-          </button>
-          <button class="tradition-btn" onclick="selectTradition('inaul', this)">
-            <span class="btn-index">03</span>
-            <span class="btn-name">Inaul // Maguindanao</span>
-          </button>
-          <button class="tradition-btn" onclick="selectTradition('maranao', this)">
-            <span class="btn-index">04</span>
-            <span class="btn-name">Landap // Maranao</span>
-          </button>
-        </div>
+  <div class="folio">
+
+    <header class="masthead" data-reveal>
+      <h1>Hablon</h1>
+      <p class="lead">Four Mindanao weaving traditions, as a loom you can work. Press the treadles, watch the cloth build, and download what you weave as an SVG.</p>
+      <p class="note">This is an interactive study that runs in your browser. The loom mechanics are real; the cloths are my own sketches in the manner of each tradition, not copies of real textiles. The treadled shaft loom here is a teaching device; these cloths are woven by their communities on backstrap and other looms.</p>
+    </header>
+
+    <section class="plate" aria-label="The loom">
+      <div class="plate-head">
+        <p class="plate-name"><span id="plateName">T'nalak</span> <i>study</i></p>
+        <p class="plate-count" id="pickCount">Pick 0 of 60</p>
       </div>
 
-      <!-- Curatorial Provenance Block -->
-      <div class="provenance-block">
-        <span class="meta-label">CULTURAL PROVENANCE</span>
-        <h2 id="traditionTitle">T'nalak Sacred Abaca Tapestry</h2>
-        <p class="origin-sub" id="traditionOrigin">Lake Sebu, South Cotabato // T'boli Dreamweavers</p>
-        
-        <p class="tradition-summary" id="traditionSummary">
-          Woven from fine abaca fibers conditioned with beeswax and dyed using natural boiled roots and bark. Traditionally known as 'woven dreams' bestowed by Fu Dalu, the spirit of abaca. The motifs embody non-repeating symmetry and rhythmic geometric permutations.
-        </p>
+      <svg id="loom" class="loom" viewBox="-20 -18 520 640" preserveAspectRatio="xMidYMid meet"
+           xmlns="http://www.w3.org/2000/svg" role="group" tabindex="0"
+           aria-label="Woven cloth. Use the arrow keys to move along the threads.">
+        <rect class="beam" x="-14" y="-12" width="508" height="10"/>
+        <g id="ghost" opacity="0.34"></g>
+        <g id="cloth"></g>
+        <g id="lastRow"></g>
+        <rect id="fell" class="fell" x="-8" y="0" width="496" height="1.6"/>
+        <g id="shuttle"><rect class="shuttle" x="0" y="0" width="44" height="6" rx="3"/></g>
+        <rect id="probe" class="probe" width="10" height="10" visibility="hidden"/>
+      </svg>
 
-        <div class="material-matrix">
-          <div class="matrix-row">
-            <span class="m-key">Base Fiber</span>
-            <span class="m-val" id="traditionFiber">Musa textilis (Wild Abaca)</span>
-          </div>
-          <div class="matrix-row">
-            <span class="m-key">Organic Pigments</span>
-            <span class="m-val" id="traditionPigments">Locust tree bark (Black), Ginger root (Red)</span>
-          </div>
-          <div class="matrix-row">
-            <span class="m-key">Loom Mechanism</span>
-            <span class="m-val" id="traditionLoom">Backstrap Tension Loom</span>
-          </div>
-          <div class="matrix-row">
-            <span class="m-key">Wallpaper Symmetry</span>
-            <span class="m-val" id="traditionSymmetry">D4 Dihedral Diamond Group</span>
-          </div>
-          <div class="matrix-row">
-            <span class="m-key">Symbolic Totem</span>
-            <span class="m-val" id="traditionTotem">G'mayaw (Sacred Hawk) &amp; Kleng (Crab)</span>
-          </div>
-        </div>
+      <p class="readout" id="readout">Hover or tap a thread to read it. With the cloth selected, the arrow keys move along the threads.</p>
+
+      <div class="toolbar">
+        <button type="button" class="btn btn-primary" id="btnWeave">Weave a pick</button>
+        <button type="button" class="btn" id="btnRun">Run</button>
+        <button type="button" class="btn" id="btnUndo">Unweave</button>
+        <button type="button" class="btn" id="btnClear">Clear</button>
+        <button type="button" class="btn btn-wide" id="btnSvg">Download SVG</button>
       </div>
-
-      <!-- Backstrap Loom Weaving Simulator -->
-      <div class="weav-sim-box">
-        <span class="meta-label">BACKSTRAP LOOM WEFT SIMULATOR</span>
-        <div class="sim-progress-bar">
-          <div class="sim-progress-fill" id="simProgressFill"></div>
-        </div>
-        <div class="sim-status-row">
-          <span id="loomStatusTxt">Heddle Shed Open // Ready</span>
-          <span id="weftCountTxt">Weft Row: 0 / 16</span>
-        </div>
-        <div class="sim-btn-row">
-          <button class="sim-btn" onclick="stepWeaveRow()">[ STEP ROW ]</button>
-          <button class="sim-btn" id="btnAutoWeave" onclick="toggleAutoWeave()">[ AUTO-WEAVE ]</button>
-          <button class="sim-btn" onclick="resetWeaveProgress()">[ RESET ]</button>
-        </div>
-      </div>
-
-      <!-- Export Actions -->
-      <div class="export-tray">
-        <button class="action-btn" onclick="exportVectorSVG()">[ EXPORT VECTOR PATTERN (.SVG) ]</button>
-        <button class="action-btn" onclick="exportWeavingDraft()">[ EXPORT WEAVING DRAFT SPEC (.JSON) ]</button>
-        <button class="action-btn secondary" onclick="randomizeLoomSeed()">[ RANDOMIZE WEAVER'S SEED ]</button>
-      </div>
-
-    </aside>
-
-    <!-- Right: Generative Loom Canvas Stage -->
-    <section class="loom-stage">
-      
-      <!-- Loom Controls Bar -->
-      <div class="loom-controls">
-        <div class="control-cell">
-          <label for="warpDensity">WARP / WEFT GRID</label>
-          <input type="range" id="warpDensity" min="8" max="24" value="16" step="2" oninput="regeneratePattern()">
-          <span class="val-tag" id="densityVal">16 x 16</span>
-        </div>
-
-        <div class="control-cell">
-          <label>BOTANICAL DYES</label>
-          <div class="palette-swatches" id="paletteSwatches">
-            <!-- Rendered dynamically -->
-          </div>
-        </div>
-
-        <div class="control-cell">
-          <label>MATHEMATICAL FIDELITY</label>
-          <span class="fidelity-tag" id="patternTag">D4 ROTATIONAL SYMMETRY</span>
-        </div>
-      </div>
-
-      <!-- The Generative SVG Canvas Frame -->
-      <div class="canvas-frame">
-        <div class="canvas-mat" id="canvasMat">
-          <svg id="loomSvg" viewBox="0 0 640 640" class="loom-svg" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="warpGridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-                <line x1="0" y1="0" x2="0" y2="40" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <rect width="640" height="640" fill="#121417" id="loomBg"/>
-            <rect width="640" height="640" fill="url(#warpGridPattern)"/>
-            <g id="loomPatternGroup"></g>
-            <!-- Animated Weft Shuttle Indicator -->
-            <line x1="0" y1="-10" x2="640" y2="-10" stroke="#d4a73b" stroke-width="3" id="shuttleLine" opacity="0"/>
-          </svg>
-          <!-- Thread Probe Tooltip -->
-          <div id="threadTooltip" class="thread-tooltip"></div>
-        </div>
-        
-        <div class="mat-caption">
-          <span class="caption-id" id="patternSpecId">FIG. 04-A // T'NALAK DIAMOND LATTICE MATRIX</span>
-          <span class="caption-scale">640 x 640 VECTOR UNITS // PROBE: HOVER THREADS</span>
-        </div>
-      </div>
-
+      <p class="sr-only" id="status" role="status" aria-live="polite"></p>
     </section>
 
-  </main>
+    <main class="page" id="main">
+
+
+
+      <section class="block" aria-labelledby="h-choose" data-reveal>
+        <h2 id="h-choose">Choose a cloth</h2>
+        <div class="chooser" id="chooser">
+          <button type="button" class="pick" data-id="tnalak" aria-pressed="true">
+            <svg class="thumb" viewBox="0 0 240 240" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+            <span class="pick-name">T'nalak</span>
+            <span class="pick-where">T'boli, Lake Sebu</span>
+          </button>
+          <button type="button" class="pick" data-id="yakan" aria-pressed="false">
+            <svg class="thumb" viewBox="0 0 240 240" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+            <span class="pick-name">Seputangan</span>
+            <span class="pick-where">Yakan, Basilan</span>
+          </button>
+          <button type="button" class="pick" data-id="inaul" aria-pressed="false">
+            <svg class="thumb" viewBox="0 0 240 240" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+            <span class="pick-name">Inaul</span>
+            <span class="pick-where">Maguindanaon, Cotabato</span>
+          </button>
+          <button type="button" class="pick" data-id="maranao" aria-pressed="false">
+            <svg class="thumb" viewBox="0 0 240 240" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
+            <span class="pick-name">Landap</span>
+            <span class="pick-where">Maranao, Lake Lanao</span>
+          </button>
+        </div>
+
+        <article class="entry" id="entry">
+          <h3 id="entryName"></h3>
+          <p id="entryAbout"></p>
+          <p id="entryStudy" class="entry-study"></p>
+          <dl class="facts">
+            <div><dt>Made by</dt><dd id="factPeople"></dd></div>
+            <div><dt>Place</dt><dd id="factPlace"></dd></div>
+            <div><dt>Structure in this study</dt><dd id="factStructure"></dd></div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="block" aria-labelledby="h-loom" data-reveal>
+        <h2 id="h-loom">Work the loom</h2>
+        <p>On a shaft loom every crossing of thread is decided by three things. The <em>threading</em> sends each warp end to a shaft. The <em>tie-up</em>, below, says which shafts each treadle lifts. The <em>treadling</em> is the order in which you press the treadles. Lifted ends show on top; lowered ends let the weft show.</p>
+        <p>The treadled shaft loom is a teaching device, used here to make the logic of a draft visible. The traditional cloths it is named for are woven by their communities on backstrap and other looms.</p>
+        <p>Press a treadle to weave one pick with it, or use Weave a pick to follow the pattern for this cloth. Click the squares to change the tie-up; picks you have already woven keep the shed they were woven with. The number keys 1 to 8 press the treadles.</p>
+
+        <div class="tieup" id="tieup" role="group" aria-label="Tie-up: which shafts each treadle lifts"></div>
+
+        <p class="follows" id="follows"></p>
+        <div class="row-actions">
+          <button type="button" class="btn-paper" id="btnRestore" hidden>Restore the original tie-up</button>
+          <button type="button" class="btn-paper" id="btnJson">Download the draft (JSON)</button>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="h-honest" data-reveal>
+        <h2 id="h-honest">What this is, and what it is not</h2>
+        <ul class="plain">
+          <li>It is a study. It runs entirely in your browser: no server, no account, and nothing you weave is saved or sent. The page does load its typeface, Newsreader, from Google Fonts.</li>
+          <li>The weaving logic is real. Threading, tie-up and treadling decide every crossing, and the SVG you download is that cloth, drawn thread by thread.</li>
+          <li>The patterns are not records. Each is a motif I drew for this page, inspired by the tradition it is named for. None is a documented design, and I have not matched them to any particular weaver's cloth.</li>
+          <li>The notes about each tradition are short summaries from general public knowledge. They have not been reviewed by weavers or cultural bearers and may be incomplete or wrong. Corrections are welcome as an issue on the repository.</li>
+          <li>Please learn from and buy from the weaving communities themselves. These exports are for study and play, not for sale as authentic textiles.</li>
+          <li>The name is a general Philippine word for handwoven cloth, used here as a plain title. The traditions are from Mindanao.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="colophon">
+    <p class="colophon-text">A study by Niño Redoble. <a href="https://github.com/ninoredoble/hablon-textile-archive">Source and issues on GitHub</a>.</p>
+    <p class="wordmark" aria-hidden="true">Hablon</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
