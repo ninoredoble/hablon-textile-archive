@@ -1,86 +1,50 @@
-# HABLON: Indigenous Mindanao Textile Geometry & Vector Loom Archive
+# Hablon
 
-> **Open-Access Digital Museum & Generative Backstrap Weaving Simulator**  
-> An interactive algorithmic archive exploring the sacred mathematical permutations, botanical dye chemistry, and tension loom structures of indigenous Mindanao weaving traditions -- from Lake Sebu to Basilan and the Bangsamoro region.
+An interactive browser study of a shaft loom. Pick one of four cloths inspired by Mindanao weaving traditions, work the loom, and download what you weave as an SVG.
 
----
+It is a static page: HTML, CSS and plain JavaScript, no build step, no server, no dependencies. It is a study, not a production system, an app, or a museum collection.
 
-## Overview
+## What it does
 
-Mindanao's indigenous textile heritage preserves complex geometric knowledge passed down across centuries through strict mental arithmetic and oral tradition. **HABLON** models these cultural textiles as dynamic vector algorithms, mapping authentic warp-and-weft interlacements, dihedral symmetries, and supplementary weft structures.
+- **Weaves by the real rules of a shaft loom.** Each crossing of the cloth is decided by the *threading* (which shaft each warp end is on), the *tie-up* (which shafts each treadle lifts) and the *treadling* (the order the treadles are pressed). Lifted warp ends show on top; lowered ends let the weft show.
+- **You drive it.** Press a treadle to weave one pick with it, or let the loom follow the pattern for the chosen cloth. Click the tie-up squares to change which shafts a treadle lifts; picks already woven keep the shed they were woven with. Number keys 1 to 8 press the treadles.
+- **Inspect any thread.** Hover, tap, or use the arrow keys on the cloth to read which shaft, which treadle, which colour.
+- **Exports.** `Download SVG` writes the cloth you wove, thread by thread, as a standalone SVG with a title and description. `Download the draft (JSON)` writes the threading, tie-up and treadling.
 
-Built without external dependencies, HABLON provides textile historians, cultural researchers, and digital fabricators with an interactive workstation to simulate the step-by-step passage of the backstrap shuttle, inspect thread tension and botanical pigment recipes, and export production-ready vector patterns and weaving draft specifications.
+## The four cloths
 
----
+| Cloth | Made by | Structure used in the study |
+| --- | --- | --- |
+| T'nalak | The T'boli, Lake Sebu | Warp-faced plain weave on 2 shafts, pattern dyed into the warp (ikat), with the feathered edges ikat gives |
+| Seputangan | The Yakan, Basilan | Plain weave ground on 2 shafts, supplementary pattern weft laid in as a nested diamond |
+| Inaul | The Maguindanaon, Cotabato region | Pointed 4/4 twill on 8 shafts, crimson warp against gold weft |
+| Landap | The Maranao, Lake Lanao | Warp-faced plain weave on 2 shafts, striped warp, supplementary weft in a pair of mirrored scrolls |
 
-## Documented Weaving Traditions
+## What it is not
 
-### 1. T'nalak // T'boli (Lake Sebu, South Cotabato)
-- **Cultural Provenance**: Sacred abaca tapestries bestowed in dreams by *Fu Dalu*, the spirit of abaca. Woven exclusively by master T'boli dreamweavers on backstrap tension looms (*ikatan*).
-- **Material Science**: Wild *Musa textilis* abaca fibers softened with beeswax and dyed over months with *K'nalum* tree bark (black) and boiled *Lokob* roots (red).
-- **Mathematical Symmetry**: **D4 Dihedral Diamond Group** -- stepped diamond lattices embedding *G'mayaw* (sacred hawk) and *Kleng* (crab) totemic silhouettes.
+- **Not a record of real textiles.** The motifs are my own sketches in the manner of each tradition. None is a documented design, and none has been matched to a particular weaver's cloth. The structures were chosen to show how a loom works, not copied from named cloths.
+- **Not reviewed by weavers or cultural bearers.** The short notes on each tradition come from general public knowledge and may be incomplete or wrong. Corrections are welcome as an issue.
+- **Not a source of authentic patterns.** The SVG exports are for study and play. Please learn from and buy from the weaving communities themselves.
+- **No data.** Nothing is measured, stored, sent or sampled; there are no sensors, accounts or backend. The colours are illustrative.
 
-### 2. Seputangan // Yakan (Lamitan, Basilan)
-- **Cultural Provenance**: Worn as an intricate headcloth or waistband during royal ceremonies. Regarded as the most mathematically complex textile in the Philippine archipelago.
-- **Material Science**: Handspun cotton and mercerized yarns colored with fermented *Indigofera tinctoria*, turmeric rhizomes, and annatto.
-- **Mathematical Symmetry**: **P4m Wallpaper Group** -- nested stepped rhombi with fourfold reflection and rotation, featuring *Bunga-Sama* (python skin / diamond cross flowers).
+The name is a general Philippine word for handwoven cloth (Hiligaynon), used here as a plain title. The traditions are from Mindanao.
 
-### 3. Inaul // Maguindanao (Sultan Kudarat & Cotabato)
-- **Cultural Provenance**: Royal heritage weave of Maguindanao sultans symbolizing nobility, dignity (*maratabat*), and martial bravery.
-- **Material Science**: Fine mulberry silk interlocked with metallic gold lurex threads on foot-pedal reed floor looms.
-- **Mathematical Symmetry**: **Pm Chevron Group** -- alternating *Binaludtu* (royal rainbow wave) herringbone zig-zag grids and interlocking diamond vessels (*Karanda*).
+## Design
 
-### 4. Landap & Okir // Maranao (Lake Lanao, Marawi)
-- **Cultural Provenance**: Celebrated tube skirts (*malong*) of Maranao nobility. Features stark longitudinal color blocks contrasted with intricate curvilinear scrolls.
-- **Material Science**: Fine cotton and raw tussar silk dyed with sappanwood, sunburst turmeric, and carbon lampblack.
-- **Mathematical Symmetry**: **C2 Curvilinear Scroll Permutation** -- vertical *Lakit* panels accented with spiral *Okir a Dato* vine motifs and *Pako Rabong* (fern fronds).
+A quiet catalogue page set in Newsreader (Google Fonts), with a fixed loom plate beside a reading column. The ground is a flat museum-wall grey; the cloths bring all the colour. Motion is limited to the weaving sweep and a soft fade-in of sections, and both are off under `prefers-reduced-motion`. The layout holds from a phone width to a wide desktop without horizontal scroll.
 
----
+## Run it
 
-## Interactive Capabilities
-
-1. **Backstrap Loom Weaving Simulator**:
-   - Step through individual weft picks with real-time shuttle animation.
-   - Run the automatic weaver to watch the complete tapestry materialize row by row.
-   - Adjust warp and weft grid densities from 8x8 up to 24x24 ends.
-2. **Interactive Thread Inspection Probe**:
-   - Hover over any thread intersection to display exact warp and weft coordinates, botanical pigment source, fiber composition, and symmetry classification.
-3. **Dual Export System**:
-   - **Vector Pattern (.SVG)**: Generates scale 1:1 crisp vector geometry suitable for CAD and laser cutting.
-   - **Weaving Draft Spec (.JSON)**: Exports point-paper dimensions, thread counts, and cultural provenance metadata.
-
----
-
-## Technical Specifications
-
-- **Stack**: Vanilla HTML5, SVG DOM Manipulation, Vanilla ES6+ JavaScript, Pure CSS3.
-- **Typography**: Museum serif (`Cinzel`), readable body sans (`Inter`), and technical monospace (`JetBrains Mono`).
-- **Character Encoding**: 100% 7-bit clean ASCII (zero mojibake / multi-byte UTF-8 errors).
-
----
-
-## Running Locally
+Open `index.html` in a browser, or serve the folder with any static server:
 
 ```bash
-# Clone the repository
-git clone https://github.com/ninoredoble/hablon-textile-archive.git
-
-# Navigate into directory
-cd hablon-textile-archive
-
-# Open index.html in any modern browser
-# (Windows)
-start index.html
-
-# (macOS)
-open index.html
-
-# (Linux)
-xdg-open index.html
+python3 -m http.server 8000
 ```
 
----
+It deploys unchanged on GitHub Pages.
 
-## Ethical Cultural Acknowledgment
+## Files
 
-This project models geometric and algorithmic principles for educational, cultural preservation, and open-access research purposes. Intellectual and cultural ownership of T'nalak, Seputangan, Inaul, and Landap patterns belongs eternally to the T'boli, Yakan, Maguindanaon, and Maranao indigenous nations.
+- `index.html`: the page and its copy
+- `styles.css`: layout, type and colour
+- `app.js`: the loom engine, cloth definitions, rendering, probe and exports
