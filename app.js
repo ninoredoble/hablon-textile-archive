@@ -163,8 +163,7 @@
     tieup: null,
     picks: [],
     running: null,
-    probe: null,
-    lastTreadle: -1
+    probe: null
   };
 
   Object.keys(PRESETS).forEach(function (id) {
@@ -276,7 +275,8 @@
     el.svg.disabled = n === 0;
     el.json.disabled = n === 0;
     el.loom.setAttribute("aria-label", P.name + " cloth, " + n + " of " + PICKS + " picks woven. Use the arrow keys to move along the threads.");
-    if (state.probe) showProbe(state.probe.e, state.probe.p, false);
+    markLastTreadle();
+    if (state.probe) showProbe(state.probe.e, state.probe.p);
   }
 
   function announce(text) {
@@ -302,6 +302,7 @@
     el.tieup.innerHTML = html;
     el.follows.textContent = P.follows + " Shafts with no thread on them are dimmed.";
     markTieupChanged();
+    markLastTreadle();
   }
 
   function tieupChanged() {
@@ -314,8 +315,8 @@
     el.restore.hidden = !tieupChanged();
   }
 
-  function flashTreadle(t) {
-    state.lastTreadle = t;
+  function markLastTreadle() {
+    var n = state.picks.length, t = n ? state.picks[n - 1].t : -1;
     var btns = el.tieup.querySelectorAll(".treadle");
     for (var i = 0; i < btns.length; i++) btns[i].classList.toggle("last", i === t);
   }
@@ -325,7 +326,6 @@
   function weaveWith(t, animate) {
     if (state.picks.length >= PICKS) return false;
     state.picks.push(makePick(state.preset, state.tieup, state.picks, t));
-    flashTreadle(t);
     render(animate);
     return true;
   }
@@ -401,7 +401,7 @@
       (pk.lift[s] ? "raised" : "lowered") + " by treadle " + (pk.t + 1) + ". Colour: " + P.palette[c.c].name + ".";
   }
 
-  function showProbe(e, p, say) {
+  function showProbe(e, p) {
     state.probe = { e: e, p: p };
     el.probe.setAttribute("x", e * CELL);
     el.probe.setAttribute("y", p * CELL);
@@ -444,7 +444,8 @@
     if (ev.key === "Escape") { clearProbe(); return; }
     if (!d) return;
     ev.preventDefault();
-    var cur = state.probe || { e: 0, p: 0 };
+    var cur = state.probe;
+    if (!cur) { showProbe(0, 0); return; }
     var e = Math.min(ENDS - 1, Math.max(0, cur.e + d[0]));
     var p = Math.min(PICKS - 1, Math.max(0, cur.p + d[1]));
     showProbe(e, p);
@@ -482,11 +483,17 @@
     announce("Downloaded " + P.name + " as an SVG.");
   }
 
+  function shaftsOn(row) {
+    var out = [];
+    row.forEach(function (on, s) { if (on) out.push(s + 1); });
+    return out;
+  }
+
   function exportJson() {
     var P = state.preset;
     var draft = {
       format: "hablon-draft/1",
-      note: "A weave draft from the Hablon loom study. The motifs are original sketches, not records of real textiles.",
+      note: "A weave draft from the Hablon loom study. The motifs are original sketches, not records of real textiles. The tie-up is the current one; the liftplan lists the shafts each woven pick actually lifted.",
       cloth: P.name,
       structure: P.structure,
       warpEnds: ENDS,
@@ -494,12 +501,9 @@
       shafts: SHAFTS,
       treadles: TREADLES,
       threading: P.threadArr.map(function (s) { return s + 1; }),
-      tieup: state.tieup.map(function (row) {
-        var out = [];
-        row.forEach(function (on, s) { if (on) out.push(s + 1); });
-        return out;
-      }),
+      tieup: state.tieup.map(shaftsOn),
       treadling: treadling(),
+      liftplan: state.picks.map(function (pk) { return shaftsOn(pk.lift); }),
       supplementaryTreadle: typeof P.suppTreadle === "number" ? P.suppTreadle + 1 : null,
       palette: P.palette
     };
